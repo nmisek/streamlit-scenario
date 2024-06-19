@@ -55,7 +55,8 @@ results = response.json()
 # loop through the grouped distributional summaries and append to a df
 df = pandas.DataFrame()
 summaries = results["grouped_distributional_summaries"]
-# st.write(summaries)
+st.write(summaries)
+st.write(type(summaries))
 
 for key, value in summaries.items():
     st.write(f"Key: {key}")
