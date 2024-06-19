@@ -1,6 +1,5 @@
 from urllib.parse import unquote
 
-import altair as alt
 import pandas
 import requests as req
 import streamlit as st
@@ -105,64 +104,6 @@ for summary in summaries:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
-            df = df.append(data)
+            df = df.append(data, ignore_index=True)
 
         st.wrie(df)
-    scatter_plot = (
-        alt.Chart(df)
-        .mark_circle()
-        .encode(
-            x="count",
-            y="forecast",
-            color=alt.Color("approach", scale=alt.Scale(scheme="category10")),
-            tooltip=["count", "forecast", "approach"],
-        )
-    )
-
-# add line y = x
-line = (
-    alt.Chart(pandas.DataFrame({"x": [df["count"].min(), df["count"].max()]}))
-    .mark_line(color="black")
-    .encode(x=alt.X("x", title="Actuals"), y=alt.Y("x", title="Forecasts"))
-)
-
-# widen plot
-chart = alt.layer(scatter_plot, line).properties(width=800).interactive()
-st.altair_chart(chart)
-
-# compute the residuals
-df["residual"] = df["count"] - df["forecast"]
-
-# histogram of the residuals colored by approach
-bin_size = st.slider(
-    "Select bin size for histogram", min_value=1, max_value=100, value=20
-)
-
-order = sorted(df["approach"].unique(), key=lambda x: (x == "ensemble", x))
-
-# Create the histogram
-histogram = (
-    alt.Chart(df)
-    .mark_bar(opacity=0.75)
-    .encode(
-        x=alt.X("residual", bin=alt.Bin(step=bin_size), title="Residuals"),
-        y="count()",
-        color=alt.Color("approach", scale=alt.Scale(scheme="category10")),
-        order=alt.Order("approach", sort="ascending"),
-    )
-)
-
-if "ensemble" in df["approach"].values:
-    # Create a histogram for the 'ensemble' approach with a black outline
-    histogram_ensemble = (
-        alt.Chart(df[df["approach"] == "ensemble"])
-        .mark_bar(color="transparent", stroke="black", strokeWidth=2)
-        .encode(
-            alt.X("residual", bin=alt.Bin(step=bin_size)),
-            alt.Y("count()"),
-        )
-    )
-    histogram = alt.layer(histogram, histogram_ensemble)
-
-histogram = histogram.properties(width=800)
-st.altair_chart(histogram)
