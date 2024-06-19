@@ -54,7 +54,7 @@ results = response.json()
 # convert the results to a pandas dataframe
 # loop through the grouped distributional summaries and append to a df
 df = pandas.DataFrame()
-summaries = df["grouped_distributional_summaries"]
+summaries = results["grouped_distributional_summaries"]
 # st.write(summaries)
 
 for i in summaries:
