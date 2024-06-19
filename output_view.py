@@ -130,9 +130,7 @@ chart = (
         x=alt.X("inputID:N", title="Input ID"),
         y=alt.Y(selected_column, title=selected_column),
         color="instanceID:N",
-    )
-    .facet(
-        column=alt.Column("input_instance:N", header=None),
+        column="input_instance:N",
     )
     .configure_axis(
         labelFontSize=15,
