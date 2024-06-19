@@ -138,7 +138,6 @@ chart = (
     )
     .configure_title(fontSize=25)
     .properties(width=800, height=400)
-    .facet(column=alt)
 )
 
 st.altair_chart(chart)
