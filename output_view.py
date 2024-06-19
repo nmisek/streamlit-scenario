@@ -1,7 +1,6 @@
 from urllib.parse import unquote
 
 import pandas
-import plotly.express as px
 import requests as req
 import streamlit as st
 
@@ -113,3 +112,4 @@ columns = df.columns
 selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
 df_filtered = df[df["indicator"] == selected_indicator]
+st.bar_chart(df_filtered.set_index("inputID")[selected_column])
