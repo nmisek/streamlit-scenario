@@ -1,9 +1,9 @@
 from urllib.parse import unquote
 
+import altair as alt
 import pandas
 import requests as req
 import streamlit as st
-
 from token_handler import init_auth_state, sendTokenRefreshMessageToParent
 
 st.set_page_config(layout="wide")
@@ -108,8 +108,28 @@ for summary in response.json()["grouped_distributional_summaries"]:
 
 st.write(df)
 indicators = df["indicator"].unique()
-columns = df.columns
+columns = [
+    col
+    for col in df.columns
+    if col not in ["inputID", "instanceID", "versionID", "indicator"]
+]
+
+# Create a dropdown menu for the user to select the indicator and column
 selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
+
+# Filter the DataFrame based on the selected indicator
 df_filtered = df[df["indicator"] == selected_indicator]
-st.bar_chart(df_filtered.set_index("inputID")[selected_column])
+
+# Create a bar chart colored by 'instanceID'
+chart = (
+    alt.Chart(df_filtered)
+    .mark_bar()
+    .encode(
+        x="inputID:N",
+        y=alt.Y(selected_column, title=selected_column),
+        color="instanceID:N",
+    )
+)
+
+st.altair_chart(chart, use_container_width=True)
