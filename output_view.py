@@ -4,9 +4,7 @@ import altair as alt
 import pandas
 import requests as req
 import streamlit as st
-from token_handler import init_auth_state, sendTokenRefreshMessageToParent
 
-st.set_page_config(layout="wide")
 
 query_params = st.query_params
 
@@ -121,15 +119,19 @@ selected_column = st.selectbox("Select a statistic:", columns)
 # Filter the DataFrame based on the selected indicator
 df_filtered = df[df["indicator"] == selected_indicator]
 
-# Create a bar chart colored by 'instanceID'
 chart = (
     alt.Chart(df_filtered)
     .mark_bar()
     .encode(
-        x="inputID:N",
-        y=alt.Y(selected_column, title=selected_column),
+        x=alt.X("inputID:N", title="Input ID"),
+        y=alt.Y(selected_column, title=selected_column, stack=None),
         color="instanceID:N",
     )
+    .configure_axis(
+        labelFontSize=15,
+        titleFontSize=20,
+    )
+    .configure_title(fontSize=25)
 )
 
 st.altair_chart(chart, use_container_width=True)
