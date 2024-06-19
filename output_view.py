@@ -49,6 +49,10 @@ if response.status_code != 200:
     st.error(f"Error: {response.text}")
     st.stop()
 
+if response.status_code == 200:
+    # write the response
+    st.write(response.json())
+
 run_data = response.json()
 solutions = run_data["output"]["solutions"]
 
