@@ -36,8 +36,9 @@ headers = st.session_state.headers
 results_url = f"{api_base_url}/v1/applications/{app_id}/experiments/batch/{batch_id}"
 response = req.get(results_url, headers=headers)
 
-st.write(response.json)
-
+if response.status_code != 200:
+    st.error(f"Error: {runs_response.text}")
+    st.stop()
 if (
     response.status_code == 403 or response.status_code == 401
 ) and st.session_state.get("api_key") == None:
