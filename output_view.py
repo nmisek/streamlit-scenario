@@ -57,19 +57,20 @@ df = pandas.DataFrame()
 summaries = results["grouped_distributional_summaries"]
 # st.write(summaries)
 
-for i in summaries:
-    data = summaries[i]
-    st.write(data)
-scatter_plot = (
-    alt.Chart(df)
-    .mark_circle()
-    .encode(
-        x="count",
-        y="forecast",
-        color=alt.Color("approach", scale=alt.Scale(scheme="category10")),
-        tooltip=["count", "forecast", "approach"],
+for key, value in summaries.items():
+    st.write(f"Key: {key}")
+    st.write(f"Value: {value}")
+
+    scatter_plot = (
+        alt.Chart(df)
+        .mark_circle()
+        .encode(
+            x="count",
+            y="forecast",
+            color=alt.Color("approach", scale=alt.Scale(scheme="category10")),
+            tooltip=["count", "forecast", "approach"],
+        )
     )
-)
 
 # add line y = x
 line = (
