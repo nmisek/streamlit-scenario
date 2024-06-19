@@ -4,10 +4,6 @@ import altair as alt
 import pandas
 import requests as req
 import streamlit as st
-from bokeh.io import show
-from bokeh.models import ColumnDataSource
-from bokeh.palettes import Spectral4
-from bokeh.plotting import figure
 
 from token_handler import init_auth_state, sendTokenRefreshMessageToParent
 
@@ -123,54 +119,25 @@ selected_column = st.selectbox("Select a statistic:", columns)
 
 # Filter the DataFrame based on the selected indicator
 df_filtered = df[df["indicator"] == selected_indicator]
-# Create a ColumnDataSource from df_filtered
-source = ColumnDataSource(df_filtered)
 
-# Create a new plot
-p = figure(
-    x_range=df_filtered["inputID"].unique(),
-    plot_width=800,
-    plot_height=400,
-    toolbar_location=None,
+chart = (
+    alt.Chart(df_filtered)
+    .mark_bar()
+    .encode(
+        x=alt.X("inputID:N", title="Input ID"),
+        y=alt.Y(selected_column, title=selected_column),
+        color="instanceID:N",
+        column="inputID:N",
+    )
+    .configure_axis(
+        labelFontSize=15,
+        titleFontSize=15,
+    )
+    .configure_title(fontSize=25)
+    .properties(width=800, height=400)
 )
 
-# Add vbars for each 'instanceID' with colors from the Spectral4 palette
-for i, instanceID in enumerate(df_filtered["instanceID"].unique()):
-    df_instance = df_filtered[df_filtered["instanceID"] == instanceID]
-    source_instance = ColumnDataSource(df_instance)
-    p.vbar(
-        x="inputID",
-        top=selected_column,
-        width=0.9,
-        source=source_instance,
-        legend_label=str(instanceID),
-        color=Spectral4[i % len(Spectral4)],
-    )
-
-# Configure plot
-p.xgrid.grid_line_color = None
-p.legend.orientation = "horizontal"
-p.legend.location = "top_center"
-
-# Show the plot
-show(p)
-# chart = (
-#     alt.Chart(df_filtered)
-#     .mark_bar()
-#     .encode(
-#         x=alt.X("inputID:N", title="Input ID"),
-#         y=alt.Y(selected_column, title=selected_column),
-#         color="instanceID:N",
-#     )
-#     .configure_axis(
-#         labelFontSize=15,
-#         titleFontSize=15,
-#     )
-#     .configure_title(fontSize=25)
-#     .properties(width=800, height=400)
-# )
-
-# st.altair_chart(chart)
+st.altair_chart(chart)
 
 
 chart = (
