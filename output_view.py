@@ -137,3 +137,18 @@ chart = (
 )
 
 st.altair_chart(chart)
+
+
+chart = (
+    alt.Chart(df_filtered)
+    .mark_rect()
+    .encode(
+        x="inputID:N",
+        y="instanceID:N",
+        color=alt.Color(selected_column, scale=alt.Scale(scheme="viridis")),
+        tooltip=[selected_column],
+    )
+    .properties(width=800, height=400)
+)
+
+st.altair_chart(chart)
