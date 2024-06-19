@@ -110,5 +110,4 @@ for summary in response.json()["grouped_distributional_summaries"]:
 st.write(df)
 
 
-fig = px.bar(df, x=df.index, y="value", color="instanceID")
-fig.show()
+s
