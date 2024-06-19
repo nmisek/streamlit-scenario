@@ -106,7 +106,7 @@ for summary in summaries:
                 "p99"
             ]
             data_df = pandas.DataFrame(data, index=[0])
-            df = df.append(pandas.DataFrame(data_df, ignore_index=True))
+            df = df.append(data_df, ignore_index=True)
 
         st.wrie(df)
     scatter_plot = (
