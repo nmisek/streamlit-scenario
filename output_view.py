@@ -108,6 +108,8 @@ for summary in response.json()["grouped_distributional_summaries"]:
             df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
 st.write(df)
-
-
-s
+indicators = df["indicator"].unique()
+columns = df.columns
+selected_indicator = st.selectbox("Select a metric:", indicators)
+selected_column = st.selectbox("Select a statistic:", columns)
+df_filtered = df[df["indicator"] == selected_indicator]
