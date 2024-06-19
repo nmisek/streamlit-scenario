@@ -48,7 +48,7 @@ if response.status_code != 200:
     st.error(f"Error: {response.text}")
     st.stop()
 
-df_data = pandas.DataFrame()
+df = pandas.DataFrame()
 for summary in response.json()["grouped_distributional_summaries"]:
     summary_type = [
         "inputID",
@@ -66,45 +66,45 @@ for summary in response.json()["grouped_distributional_summaries"]:
                 "versionID": metadata.get("versionID"),
                 "indicator": indicator,
             }
-            # data["min"] = summary["indicator_distributions"][indicator]["min"]
-            # data["max"] = summary["indicator_distributions"][indicator]["max"]
-            # data["count"] = summary["indicator_distributions"][indicator]["count"]
-            # data["mean"] = summary["indicator_distributions"][indicator]["mean"]
-            # data["std"] = summary["indicator_distributions"][indicator]["std"]
-            # data["shifted_geometric_mean_value"] = summary["indicator_distributions"][
-            #     indicator
-            # ]["shifted_geometric_mean"]["value"]
-            # data["shifted_geometric_mean_shift"] = summary["indicator_distributions"][
-            #     indicator
-            # ]["shifted_geometric_mean"]["shift"]
-            # data["p01"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p01"
-            # ]
-            # data["p05"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p05"
-            # ]
-            # data["p10"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p10"
-            # ]
-            # data["p25"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p25"
-            # ]
-            # data["p50"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p50"
-            # ]
-            # data["p75"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p75"
-            # ]
-            # data["p90"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p90"
-            # ]
-            # data["p95"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p95"
-            # ]
-            # data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
-            #     "p99"
-            # ]
+            data["min"] = summary["indicator_distributions"][indicator]["min"]
+            data["max"] = summary["indicator_distributions"][indicator]["max"]
+            data["count"] = summary["indicator_distributions"][indicator]["count"]
+            data["mean"] = summary["indicator_distributions"][indicator]["mean"]
+            data["std"] = summary["indicator_distributions"][indicator]["std"]
+            data["shifted_geometric_mean_value"] = summary["indicator_distributions"][
+                indicator
+            ]["shifted_geometric_mean"]["value"]
+            data["shifted_geometric_mean_shift"] = summary["indicator_distributions"][
+                indicator
+            ]["shifted_geometric_mean"]["shift"]
+            data["p01"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p01"
+            ]
+            data["p05"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p05"
+            ]
+            data["p10"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p10"
+            ]
+            data["p25"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p25"
+            ]
+            data["p50"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p50"
+            ]
+            data["p75"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p75"
+            ]
+            data["p90"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p90"
+            ]
+            data["p95"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p95"
+            ]
+            data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p99"
+            ]
             st.write(data)
-            df_data = df_data.append(data, ignore_index=True)
+            df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
-        st.wrie(df_data)
+        st.wrie(df)
