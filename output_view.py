@@ -57,7 +57,7 @@ for summary in summaries:
     summary_type = ["inputID", "instanceID", "versionID"]
     # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
-        st.write(pandas.DataFrame(summary))
+        st.write(summary)
 
     scatter_plot = (
         alt.Chart(df)
