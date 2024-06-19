@@ -58,12 +58,18 @@ for summary in summaries:
     # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
         st.write(summary)
-        summary_dict = dict(zip(summary["group_keys"], summary["group_values"]))
+        metadata = dict(zip(summary["group_keys"], summary["group_values"]))
+        values = dict(zip(summary["indicator_keys"], "indicator_distributions"))
         data = {
-            "inputID": summary_dict.get("inputID"),
-            "instanceID": summary_dict.get("instanceID"),
-            "versionID": summary_dict.get("versionID"),
+            "inputID": metadata.get("inputID"),
+            "instanceID": metadata.get("instanceID"),
+            "versionID": metadata.get("versionID"),
         }
+
+        for indicator in summary["indicator_keys"]:
+            data[indicator + "_min"] = summary["indicator_distributions"][indicator][
+                "min"
+            ]
 
         st.write(data)
 
