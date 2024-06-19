@@ -49,7 +49,7 @@ if response.status_code != 200:
     st.stop()
 
 df_data = pandas.DataFrame()
-for summary in response.json().results["grouped_distributional_summaries"]:
+for summary in response.json()["grouped_distributional_summaries"]:
     summary_type = [
         "inputID",
         "instanceID",
