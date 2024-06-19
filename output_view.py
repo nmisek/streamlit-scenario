@@ -127,7 +127,7 @@ chart = (
     alt.Chart(df_filtered)
     .mark_bar()
     .encode(
-        x=alt.value(0),
+        x="instanceID:N",
         y=alt.Y(selected_column, title=selected_column),
         color="instanceID:N",
         column="inputID",
