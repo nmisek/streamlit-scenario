@@ -119,6 +119,9 @@ selected_column = st.selectbox("Select a statistic:", columns)
 
 # Filter the DataFrame based on the selected indicator
 df_filtered = df[df["indicator"] == selected_indicator]
+df_filtered["input_instance"] = (
+    df_filtered["inputID"].astype(str) + "_" + df_filtered["instanceID"].astype(str)
+)
 
 chart = (
     alt.Chart(df_filtered)
@@ -127,7 +130,9 @@ chart = (
         x=alt.X("inputID:N", title="Input ID"),
         y=alt.Y(selected_column, title=selected_column),
         color="instanceID:N",
-        column="instanceID:N",
+    )
+    .facet(
+        column=alt.Column("input_instance:N", header=None),
     )
     .configure_axis(
         labelFontSize=15,
@@ -135,6 +140,7 @@ chart = (
     )
     .configure_title(fontSize=25)
     .properties(width=800, height=400)
+    .facet(column=alt)
 )
 
 st.altair_chart(chart)
