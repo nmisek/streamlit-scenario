@@ -122,10 +122,10 @@ df_filtered = df[df["indicator"] == selected_indicator]
 
 chart = (
     alt.Chart(df_filtered)
-    .mark_rect()
+    .mark_bar()
     .encode(
         x=alt.X("inputID:N", title="Input ID"),
-        y=alt.Y(selected_column, title=selected_column, stack=None),
+        y=alt.Y(selected_column, title=selected_column),
         color="instanceID:N",
     )
     .configure_axis(
