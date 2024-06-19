@@ -105,7 +105,7 @@ for summary in summaries:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
-            df = df.append(data, ignore_index=True)
+            df = df.append(data)
 
         st.wrie(df)
     scatter_plot = (
