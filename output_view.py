@@ -106,9 +106,9 @@ for summary in summaries:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
+            df = df.append(pandas.DataFrame(data, index=[0]))
 
-        st.write(data)
-
+        st.wrie(df)
     scatter_plot = (
         alt.Chart(df)
         .mark_circle()
