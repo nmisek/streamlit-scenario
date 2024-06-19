@@ -58,9 +58,8 @@ summaries = results["grouped_distributional_summaries"]
 st.write(summaries)
 st.write(type(summaries))
 
-for key, value in summaries.items():
-    st.write(f"Key: {key}")
-    st.write(f"Value: {value}")
+for summary in summaries:
+    st.write(summary)
 
     scatter_plot = (
         alt.Chart(df)
