@@ -60,16 +60,16 @@ for summary in summaries:
         st.write(summary)
         metadata = dict(zip(summary["group_keys"], summary["group_values"]))
         values = dict(zip(summary["indicator_keys"], "indicator_distributions"))
-        data = {
-            "inputID": metadata.get("inputID"),
-            "instanceID": metadata.get("instanceID"),
-            "versionID": metadata.get("versionID"),
-        }
 
         for indicator in summary["indicator_keys"]:
-            data[indicator + "_min"] = summary["indicator_distributions"][indicator][
-                "min"
-            ]
+            data = {
+                "inputID": metadata.get("inputID"),
+                "instanceID": metadata.get("instanceID"),
+                "versionID": metadata.get("versionID"),
+                "indicator": indicator,
+            }
+            data["min"] = summary["indicator_distributions"][indicator]["min"]
+            data["max"] = summary["indicator_distributions"][indicator]["max"]
 
         st.write(data)
 
