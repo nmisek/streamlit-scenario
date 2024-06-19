@@ -1,5 +1,6 @@
 from urllib.parse import unquote
 
+import matplotlib.pyplot as plt
 import pandas
 import requests as req
 import streamlit as st
@@ -107,3 +108,13 @@ for summary in response.json()["grouped_distributional_summaries"]:
             df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
 st.write(df)
+
+
+colors = {
+    unique_value: plt.cm.Paired(i / float(df["instanceID"].nunique()))
+    for i, unique_value in enumerate(df["instanceID"].unique())
+}
+df["value"].plot(
+    kind="bar", color=[colors[i] for i in df["instanceID"]], figsize=(10, 6)
+)
+plt.show()
