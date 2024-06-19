@@ -48,13 +48,13 @@ if response.status_code != 200:
     st.error(f"Error: {response.text}")
     st.stop()
 
-results = response.json()
-df = pandas.DataFrame()
-summaries = results["grouped_distributional_summaries"]
-
-for summary in summaries:
-    summary_type = ["inputID", "instanceID", "versionID"]
-    # get the distributional summaries by inputID, instanceID, and versionID
+df_data = pandas.DataFrame()
+for summary in response.json().results["grouped_distributional_summaries"]:
+    summary_type = [
+        "inputID",
+        "instanceID",
+        "versionID",
+    ]  # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
         metadata = dict(zip(summary["group_keys"], summary["group_values"]))
         values = dict(zip(summary["indicator_keys"], "indicator_distributions"))
@@ -104,6 +104,6 @@ for summary in summaries:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
-            df = df.append(data, ignore_index=True)
+            df_data = df_data.append(data, ignore_index=True)
 
-        st.wrie(df)
+        st.wrie(df_data)
