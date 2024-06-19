@@ -1,7 +1,7 @@
 from urllib.parse import unquote
 
-import matplotlib.pyplot as plt
 import pandas
+import plotly.express as px
 import requests as req
 import streamlit as st
 
@@ -110,11 +110,5 @@ for summary in response.json()["grouped_distributional_summaries"]:
 st.write(df)
 
 
-colors = {
-    unique_value: plt.cm.Paired(i / float(df["instanceID"].nunique()))
-    for i, unique_value in enumerate(df["instanceID"].unique())
-}
-df["value"].plot(
-    kind="bar", color=[colors[i] for i in df["instanceID"]], figsize=(10, 6)
-)
-plt.show()
+fig = px.bar(df, x=df.index, y="value", color="instanceID")
+fig.show()
