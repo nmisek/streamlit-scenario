@@ -50,19 +50,14 @@ if response.status_code != 200:
     st.stop()
 
 results = response.json()
-
-# convert the results to a pandas dataframe
-# loop through the grouped distributional summaries and append to a df
 df = pandas.DataFrame()
 summaries = results["grouped_distributional_summaries"]
-# st.write(summaries)
-# st.write(type(summaries))
 
 for summary in summaries:
     summary_type = ["inputID", "instanceID", "versionID"]
-    ## check if summary["group_keys"] has all the values of summary_type
+    # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
-        st.write(summary["group_keys"])
+        st.write(pandas.DataFrame(summary))
 
     scatter_plot = (
         alt.Chart(df)
