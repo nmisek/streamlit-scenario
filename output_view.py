@@ -145,7 +145,7 @@ chart = (
     .encode(
         x="inputID:N",
         y="instanceID:N",
-        color=alt.Color(selected_column, scale=alt.Scale(scheme="viridis")),
+        color=alt.Color(selected_column, scale=alt.Scale(scheme="blues")),
         tooltip=[selected_column],
     )
     .properties(width=800, height=400)
