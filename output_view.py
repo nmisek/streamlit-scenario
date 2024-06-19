@@ -104,7 +104,6 @@ for summary in response.json()["grouped_distributional_summaries"]:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
-            st.write(data)
             df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
-        st.wrie(df)
+        st.write(df)
