@@ -125,12 +125,12 @@ chart = (
     .mark_rect()
     .encode(
         x=alt.X("inputID:N", title="Input ID"),
-        y=alt.Y(selected_column, title=selected_column),
+        y=alt.Y(selected_column, title=selected_column, stack=None),
         color="instanceID:N",
     )
     .configure_axis(
-        labelFontSize=20,
-        titleFontSize=20,
+        labelFontSize=15,
+        titleFontSize=15,
     )
     .configure_title(fontSize=25)
 )
