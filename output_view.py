@@ -54,12 +54,11 @@ results = response.json()
 # convert the results to a pandas dataframe
 # loop through the grouped distributional summaries and append to a df
 df = pandas.DataFrame()
+st.write(results["grouped_distributional_summaries"])
+
 for i in results["grouped_distributional_summaries"]:
-    st.write(results["grouped_distributional_summaries"])
     data = pandas.DataFrame(results["grouped_distributional_summaries"][i])
     df = pandas.concat([df, data])
-
-st.write(df)
 
 scatter_plot = (
     alt.Chart(df)
