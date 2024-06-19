@@ -49,21 +49,16 @@ if response.status_code != 200:
     st.error(f"Error: {response.text}")
     st.stop()
 
-if response.status_code == 200:
-    # write the response
-    st.write(response.json())
+results = response.json()
 
-run_data = response.json()
-solutions = run_data["output"]["solutions"]
-
+# convert the results to a pandas dataframe
+# loop through the grouped distributional summaries and append to a df
 df = pandas.DataFrame()
-for approach in solutions:
-    approach_data = pandas.DataFrame(solutions[approach])
-    approach_data = approach_data[approach_data["count"].notnull()]
-    approach_data["approach"] = approach
-    df = pandas.concat([df, approach_data])
+for i in results["grouped_distributional_summaries"]:
+    data = pandas.DataFrame(results["grouped_distributional_summaries"][i])
+    df = pandas.concat([df, data])
 
-# df["line_width"] = df["approach"].apply(lambda x: 3 if x == "ensemble" else 1)
+st.write(df)
 
 scatter_plot = (
     alt.Chart(df)
