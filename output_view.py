@@ -57,7 +57,6 @@ for summary in summaries:
     summary_type = ["inputID", "instanceID", "versionID"]
     # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
-        st.write(summary)
         metadata = dict(zip(summary["group_keys"], summary["group_values"]))
         values = dict(zip(summary["indicator_keys"], "indicator_distributions"))
 
@@ -106,7 +105,7 @@ for summary in summaries:
             data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
                 "p99"
             ]
-            df = df.append(pandas.DataFrame(data, index=[0]))
+            df = df.append(pandas.DataFrame(data, ignore_index=True))
 
         st.wrie(df)
     scatter_plot = (
