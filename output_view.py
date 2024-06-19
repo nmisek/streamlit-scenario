@@ -70,6 +70,42 @@ for summary in summaries:
             }
             data["min"] = summary["indicator_distributions"][indicator]["min"]
             data["max"] = summary["indicator_distributions"][indicator]["max"]
+            data["count"] = summary["indicator_distributions"][indicator]["count"]
+            data["mean"] = summary["indicator_distributions"][indicator]["mean"]
+            data["std"] = summary["indicator_distributions"][indicator]["std"]
+            data["shifted_geometric_mean_value"] = summary["indicator_distributions"][
+                indicator
+            ]["shifted_geometric_mean"]["value"]
+            data["shifted_geometric_mean_shift"] = summary["indicator_distributions"][
+                indicator
+            ]["shifted_geometric_mean"]["shift"]
+            data["p01"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p01"
+            ]
+            data["p05"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p05"
+            ]
+            data["p10"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p10"
+            ]
+            data["p25"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p25"
+            ]
+            data["p50"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p50"
+            ]
+            data["p75"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p75"
+            ]
+            data["p90"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p90"
+            ]
+            data["p95"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p95"
+            ]
+            data["p99"] = summary["indicator_distributions"][indicator]["percentiles"][
+                "p99"
+            ]
 
         st.write(data)
 
