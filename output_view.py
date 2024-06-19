@@ -58,6 +58,15 @@ for summary in summaries:
     # get the distributional summaries by inputID, instanceID, and versionID
     if all(key in summary["group_keys"] for key in summary_type):
         st.write(summary)
+        data = {
+            "inputID": summary["group_values"][summary["group_keys"] == "inputID"],
+            "instanceID": summary["group_values"][
+                summary["group_keys"] == "instanceID"
+            ],
+            "versionID": summary["group_values"][summary["group_keys"] == "versionID"],
+        }
+
+        st.write(data)
 
     scatter_plot = (
         alt.Chart(df)
