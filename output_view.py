@@ -59,7 +59,10 @@ summaries = results["grouped_distributional_summaries"]
 # st.write(type(summaries))
 
 for summary in summaries:
-    st.write(summary["group_keys"])
+    summary_type = ["inputID", "instanceID", "versionID"]
+    ## check if summary["group_keys"] has all the values of summary_type
+    if all(key in summary["group_keys"] for key in summary_type):
+        st.write(summary["group_keys"])
 
     scatter_plot = (
         alt.Chart(df)
