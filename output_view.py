@@ -127,7 +127,7 @@ chart = (
         x=alt.X("inputID:N", title="Input ID"),
         y=alt.Y(selected_column, title=selected_column),
         color="instanceID:N",
-        column="inputID:N",
+        column="instanceID:N",
     )
     .configure_axis(
         labelFontSize=15,
