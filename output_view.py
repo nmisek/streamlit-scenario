@@ -122,7 +122,7 @@ if selected_column == "mean":
     df_filtered["upper_bound"] = df_filtered["mean"] + 1.96 * df_filtered["std"]
     st.write(df_filtered)
 
-if selected_column == "mean":
+if selected_column == "mean" and not df_filtered["std"].isna().any():
     base = alt.Chart(df_filtered).encode(
         x="instanceID:N",
         color="instanceID:N",
