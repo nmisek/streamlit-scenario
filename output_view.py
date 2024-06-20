@@ -140,18 +140,13 @@ chart = (
 )
 
 if selected_column == "mean":
-    error_bars = (
-        alt.Chart(df_filtered)
-        .mark_errorbar()
-        .encode(
-            x="instanceID:N",
-            y="lower_bound:Q",
-            y2="upper_bound:Q",
-            color="instanceID:N",
-            column="inputID",
-        )
+    chart = chart.mark_errorbar().encode(
+        x="instanceID:N",
+        y="lower_bound:Q",
+        y2="upper_bound:Q",
+        color="instanceID:N",
+        column="inputID",
     )
-    chart = chart + error_bars
 
 
 st.altair_chart(chart)
