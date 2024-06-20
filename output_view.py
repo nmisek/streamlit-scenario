@@ -1,3 +1,4 @@
+import math
 from urllib.parse import unquote
 
 import altair as alt
@@ -118,8 +119,12 @@ selected_column = st.selectbox("Select a statistic:", columns)
 df_filtered = df[df["indicator"] == selected_indicator]
 if selected_column == "mean":
     st.write(df_filtered)
-    df_filtered["lower_bound"] = df_filtered["mean"] - 2.5 * df_filtered["std"]
-    df_filtered["upper_bound"] = df_filtered["mean"] + 2.5 * df_filtered["std"]
+    df_filtered["lower_bound"] = df_filtered["mean"] - 1.96 * df_filtered[
+        "std"
+    ] / math.sqrt(df_filtered["count"])
+    df_filtered["upper_bound"] = df_filtered["mean"] + 1.96 * df_filtered[
+        "std"
+    ] / math.sqrt(df_filtered["count"])
     st.write(df_filtered)
 
 if selected_column == "mean":
