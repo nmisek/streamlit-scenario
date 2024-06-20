@@ -149,6 +149,26 @@ if selected_column == "mean":
         )
         .configure_title(fontSize=25)
     )
+else:
+    base = alt.Chart(df_filtered).encode(
+        x="instanceID:N",
+        color="instanceID:N",
+    )
+
+    bars = base.mark_bar().encode(
+        y=alt.Y(selected_column, title=selected_column),
+    )
+    chart = (
+        bars.properties(width=800)
+        .facet(
+            column="inputID",
+        )
+        .configure_axis(
+            labelFontSize=15,
+            titleFontSize=15,
+        )
+        .configure_title(fontSize=25)
+    )
 
 st.altair_chart(chart)
 
