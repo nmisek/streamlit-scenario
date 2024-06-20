@@ -122,37 +122,33 @@ if selected_column == "mean":
     df_filtered["upper_bound"] = df_filtered["mean"] + 2.5 * df_filtered["std"]
     st.write(df_filtered)
 
-chart = (
-    alt.Chart(df_filtered)
-    .mark_bar()
-    .encode(
-        x="instanceID:N",
-        y=alt.Y(selected_column, title=selected_column),
-        color="instanceID:N",
-        column="inputID",
-    )
-    # .configure_axis(
-    #     labelFontSize=15,
-    #     titleFontSize=15,
-    # )
-    # .configure_title(fontSize=25)
-    # .properties(width=800, height=400)
-)
-
 if selected_column == "mean":
-    error_bars = (
-        alt.Chart(df_filtered)
-        .mark_errorbar()
-        .encode(
-            x="instanceID:N",
-            y="lower_bound:Q",
-            y2="upper_bound:Q",
-            color="instanceID:N",
+    base = alt.Chart(df_filtered).encode(
+        x="instanceID:N",
+        color="instanceID:N",
+    )
+
+    bars = base.mark_bar().encode(
+        y=alt.Y(selected_column, title=selected_column),
+    )
+
+    error_bars = base.mark_errorbar().encode(
+        y="lower_bound:Q",
+        y2="upper_bound:Q",
+    )
+
+    chart = (
+        (bars + error_bars)
+        .facet(
             column="inputID",
         )
+        .configure_axis(
+            labelFontSize=15,
+            titleFontSize=15,
+        )
+        .configure_title(fontSize=25)
+        .properties(width=800, height=400)
     )
-    chart = chart + error_bars
-
 
 st.altair_chart(chart)
 
