@@ -147,7 +147,7 @@ if selected_column == "mean":
             titleFontSize=15,
         )
         .configure_title(fontSize=25)
-        .properties(width=800, height=400)
+        # .properties(width=800, height=400)
     )
 
 st.altair_chart(chart)
