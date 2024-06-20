@@ -139,6 +139,7 @@ if selected_column == "mean":
 
     chart = (
         (bars + error_bars)
+        .properties(width=800)
         .facet(
             column="inputID",
         )
@@ -147,11 +148,9 @@ if selected_column == "mean":
             titleFontSize=15,
         )
         .configure_title(fontSize=25)
-        .properties(width=800)
     )
 
 st.altair_chart(chart)
-
 
 chart = (
     alt.Chart(df_filtered)
