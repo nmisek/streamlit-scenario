@@ -105,7 +105,6 @@ for summary in response.json()["grouped_distributional_summaries"]:
             ]
             df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
-st.write(df)
 indicators = df["indicator"].unique()
 columns = [
     col
@@ -120,7 +119,7 @@ df_filtered = df[df["indicator"] == selected_indicator]
 if selected_column == "mean":
     df_filtered["lower_bound"] = df_filtered["mean"] - 2.5 * df_filtered["std"]
     df_filtered["upper_bound"] = df_filtered["mean"] + 2.5 * df_filtered["std"]
-
+    st.write(df_filtered)
 
 chart = (
     alt.Chart(df_filtered)
