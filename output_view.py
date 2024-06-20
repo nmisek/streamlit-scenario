@@ -140,8 +140,8 @@ chart = (
 )
 
 if selected_column == "mean":
-    chart = chart.mark_errorbar().encode(y="lower_bound:Q", y2="upper_bound:Q")
-
+    error_bars = st.mark_errorbar().encode(y="lower_bound:Q", y2="upper_bound:Q")
+    chart = error_bars + chart
 
 st.altair_chart(chart)
 
