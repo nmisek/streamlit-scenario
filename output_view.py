@@ -116,12 +116,13 @@ columns = [
 # Create a dropdown menu for the user to select the indicator and column
 selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
-
-# Filter the DataFrame based on the selected indicator
 df_filtered = df[df["indicator"] == selected_indicator]
-df_filtered["input_instance"] = (
-    df_filtered["inputID"].astype(str) + "_" + df_filtered["instanceID"].astype(str)
-)
+if selected_indicator == "mean":
+    df_std = df[df["indicator"] == "std"]
+    df_filtered = df_filtered.merge(df_std, on=["inputID", "instanceID", "versionID"])
+    df_filtered["lower_bound"] = df_filtered["mean"] - 2.5 * df_filtered["std"]
+    df_filtered["upper_bound"] = df_filtered["mean"] + 2.5 * df_filtered["std"]
+
 
 chart = (
     alt.Chart(df_filtered)
@@ -139,6 +140,11 @@ chart = (
     .configure_title(fontSize=25)
     .properties(width=800, height=400)
 )
+
+if selected_indicator == "mean":
+    error_bars = chart.mark_errorbar().encode(y="lower_bound:Q", y2="upper_bound:Q")
+    chart = chart + error_bars
+
 
 st.altair_chart(chart)
 
