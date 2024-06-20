@@ -131,12 +131,12 @@ chart = (
         color="instanceID:N",
         column="inputID",
     )
-    .configure_axis(
-        labelFontSize=15,
-        titleFontSize=15,
-    )
-    .configure_title(fontSize=25)
-    .properties(width=800, height=400)
+    # .configure_axis(
+    #     labelFontSize=15,
+    #     titleFontSize=15,
+    # )
+    # .configure_title(fontSize=25)
+    # .properties(width=800, height=400)
 )
 
 if selected_column == "mean":
