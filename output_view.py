@@ -117,7 +117,7 @@ columns = [
 selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
 df_filtered = df[df["indicator"] == selected_indicator]
-if selected_indicator == "mean":
+if selected_column == "mean":
     df_std = df[df["indicator"] == "std"]
     df_filtered = df_filtered.merge(df_std, on=["inputID", "instanceID", "versionID"])
     df_filtered["lower_bound"] = df_filtered["mean"] - 2.5 * df_filtered["std"]
@@ -141,7 +141,7 @@ chart = (
     .properties(width=800, height=400)
 )
 
-if selected_indicator == "mean":
+if selected_column == "mean":
     error_bars = chart.mark_errorbar().encode(y="lower_bound:Q", y2="upper_bound:Q")
     chart = chart + error_bars
 
