@@ -118,9 +118,6 @@ selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
 df_filtered = df[df["indicator"] == selected_indicator]
 if selected_column == "mean":
-    df_std = df[df["indicator"] == "std"]
-    df_filtered = df_filtered.merge(df_std)
-    st.write(df_filtered)
     df_filtered["lower_bound"] = df_filtered["mean"] - 2.5 * df_filtered["std"]
     df_filtered["upper_bound"] = df_filtered["mean"] + 2.5 * df_filtered["std"]
 
