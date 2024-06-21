@@ -116,6 +116,20 @@ columns = [
 selected_indicator = st.selectbox("Select a metric:", indicators)
 selected_column = st.selectbox("Select a statistic:", columns)
 df_filtered = df[df["indicator"] == selected_indicator]
+
+chart = (
+    alt.Chart(df_filtered)
+    .mark_bar()
+    .encode(
+        x="inputID:N",
+        y=alt.Y(selected_column, stack="zero"),
+        color="instanceID:N",
+        tooltip=[selected_column],
+    )
+    .properties(width=800, height=400)
+)
+
+st.altair_chart(chart)
 # if selected_column == "mean" and all(df_filtered["std"] > 1):
 #     st.write(df_filtered)
 #     df_filtered["lower_bound"] = df_filtered["mean"] - 1.96 * df_filtered["std"]
@@ -149,27 +163,27 @@ df_filtered = df[df["indicator"] == selected_indicator]
 #         .configure_title(fontSize=25)
 #     )
 # else:
-base = alt.Chart(df_filtered).encode(
-    x="instanceID:N",
-    color="instanceID:N",
-)
+# base = alt.Chart(df_filtered).encode(
+#     x="instanceID:N",
+#     color="instanceID:N",
+# )
 
-bars = base.mark_bar().encode(
-    y=alt.Y(selected_column, title=selected_column, stack="zero"),
-)
-chart = (
-    bars.properties(width=800)
-    .facet(
-        column="inputID",
-    )
-    .configure_axis(
-        labelFontSize=15,
-        titleFontSize=15,
-    )
-    .configure_title(fontSize=25)
-)
+# bars = base.mark_bar().encode(
+#     y=alt.Y(selected_column, title=selected_column),
+# )
+# chart = (
+#     bars.properties(width=800)
+#     .facet(
+#         column="inputID",
+#     )
+#     .configure_axis(
+#         labelFontSize=15,
+#         titleFontSize=15,
+#     )
+#     .configure_title(fontSize=25)
+# )
 
-st.altair_chart(chart)
+# st.altair_chart(chart)
 
 chart = (
     alt.Chart(df_filtered)
