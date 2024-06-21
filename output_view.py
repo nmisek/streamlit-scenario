@@ -112,19 +112,30 @@ columns = [
     if col not in ["inputID", "instanceID", "versionID", "indicator"]
 ]
 
-# Create a dropdown menu for the user to select the indicator and column
-selected_indicator = st.selectbox("Select a metric:", indicators)
-selected_column = st.selectbox("Select a statistic:", columns)
-df_filtered = df[df["indicator"] == selected_indicator]
+# Initialize session_state if it doesn't exist
+if "selected_indicator" not in st.session_state:
+    st.session_state.selected_indicator = indicators[0]
 
+if "selected_column" not in st.session_state:
+    st.session_state.selected_column = columns[0]
+
+# Create a dropdown menu for the user to select the indicator and column
+st.session_state.selected_indicator = st.selectbox(
+    "Select a metric:", indicators, key="selected_indicator"
+)
+st.session_state.selected_column = st.selectbox(
+    "Select a statistic:", columns, key="selected_column"
+)
+
+df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
 chart = (
     alt.Chart(df_filtered)
     .mark_bar()
     .encode(
         x="inputID:N",
-        y=alt.Y(selected_column, stack="zero"),
+        y=alt.Y(st.session_state.selected_column, stack="zero"),
         color="instanceID:N",
-        tooltip=[selected_column],
+        tooltip=[st.session_state.selected_column],
     )
     .properties(width=800, height=400)
 )
@@ -191,8 +202,10 @@ chart = (
     .encode(
         x="inputID:N",
         y="instanceID:N",
-        color=alt.Color(selected_column, scale=alt.Scale(scheme="blues")),
-        tooltip=[selected_column],
+        color=alt.Color(
+            st.session_state.selected_column, scale=alt.Scale(scheme="blues")
+        ),
+        tooltip=[st.session_state.selected_column],
     )
     .properties(width=800, height=400)
 )
