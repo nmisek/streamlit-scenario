@@ -114,19 +114,17 @@ columns = [
 
 # Initialize session_state if it doesn't exist
 if "selected_indicator" not in st.session_state:
-    st.session_state.selected_indicator = st.selectbox(
-        "Select a metric:", indicators, key="selected_indicator"
-    )
+    st.session_state.selected_indicator = indicators[0]
 
 if "selected_column" not in st.session_state:
     st.session_state.selected_column = columns[0]
 
 # Create a dropdown menu for the user to select the indicator and column
 st.session_state.selected_indicator = st.selectbox(
-    "Select a metric:", indicators, key="selected_indicator"
+    "Select a metric:", indicators, key="selected_indicator", value=st.session_state.selected_indicator
 )
 st.session_state.selected_column = st.selectbox(
-    "Select a statistic:", columns, key="selected_column"
+    "Select a statistic:", columns, key="selected_column", value=st.session_state.selected_column
 )
 
 df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
