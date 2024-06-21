@@ -123,18 +123,33 @@ st.selectbox("Select a statistic:", columns, key="selected_column")
 # if "selected_column" not in st.session_state:
 #     selected_column = columns[0]
 
-df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
-chart = (
-    alt.Chart(df_filtered)
-    .mark_bar()
-    .encode(
-        x="inputID:N",
-        y=alt.Y(st.session_state.selected_column, stack="zero"),
-        color="instanceID:N",
-        tooltip=[st.session_state.selected_column],
-    )
-    .properties(width=800, height=400)
-)
+if st.button('Refresh'):
+    # The script is rerun from top to bottom when the button is clicked
+
+    df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
+    chart = (
+        alt.Chart(df_filtered)
+        .mark_bar()
+        .encode(
+            x="inputID:N",
+            y=alt.Y(st.session_state.selected_column, stack="zero"),
+            color="instanceID:N",
+            tooltip=[st.session_state.selected_column],
+        )
+        .properties(width=800, height=400)
+
+# df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
+# chart = (
+#     alt.Chart(df_filtered)
+#     .mark_bar()
+#     .encode(
+#         x="inputID:N",
+#         y=alt.Y(st.session_state.selected_column, stack="zero"),
+#         color="instanceID:N",
+#         tooltip=[st.session_state.selected_column],
+#     )
+#     .properties(width=800, height=400)
+# )
 
 st.altair_chart(chart)
 
