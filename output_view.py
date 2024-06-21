@@ -113,12 +113,10 @@ columns = [
 ]
 
 # Create a dropdown menu for the user to select the indicator and column
-st.session_state.selected_indicator = st.selectbox(
+selected_indicator = st.selectbox(
     "Select a metric:", indicators, key="selected_indicator"
 )
-st.session_state.selected_column = st.selectbox(
-    "Select a statistic:", columns, key="selected_column"
-)
+selected_column = st.selectbox("Select a statistic:", columns, key="selected_column")
 
 # Initialize session_state if it doesn't exist
 if "selected_indicator" not in st.session_state:
