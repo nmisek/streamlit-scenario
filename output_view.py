@@ -200,7 +200,8 @@ chart = (
         x="inputID:N",
         y="instanceID:N",
         color=alt.Color(
-            st.session_state.selected_column, scale=alt.Scale(scheme="blues")
+            st.session_state.selected_column,
+            scale=alt.Scale(scheme="blues", type="log"),
         ),
         tooltip=[st.session_state.selected_column],
     )
