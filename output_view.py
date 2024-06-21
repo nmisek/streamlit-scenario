@@ -105,12 +105,12 @@ for summary in response.json()["grouped_distributional_summaries"]:
             ]
             df = pandas.concat([df, pandas.DataFrame([data])], ignore_index=True)
 
-indicators = df["indicator"].unique().sort()
+indicators = df["indicator"].unique()
 columns = [
     col
     for col in df.columns
     if col not in ["inputID", "instanceID", "versionID", "indicator"]
-].sort()
+]
 
 # Create a dropdown menu for the user to select the indicator and column
 st.selectbox("Select a metric:", indicators, key="selected_indicator")
