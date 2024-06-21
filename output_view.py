@@ -114,7 +114,9 @@ columns = [
 
 # Initialize session_state if it doesn't exist
 if "selected_indicator" not in st.session_state:
-    st.session_state.selected_indicator = indicators[0]
+    st.session_state.selected_indicator = st.selectbox(
+        "Select a metric:", indicators, key="selected_indicator"
+    )
 
 if "selected_column" not in st.session_state:
     st.session_state.selected_column = columns[0]
