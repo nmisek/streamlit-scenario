@@ -155,7 +155,7 @@ base = alt.Chart(df_filtered).encode(
 )
 
 bars = base.mark_bar().encode(
-    y=alt.Y(selected_column, title=selected_column),
+    y=alt.Y(selected_column, title=selected_column, stack="zero"),
 )
 chart = (
     bars.properties(width=800)
