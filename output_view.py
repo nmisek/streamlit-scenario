@@ -123,6 +123,9 @@ if "selected_column" not in st.session_state:
 st.selectbox("Select a metric:", indicators, key="selected_indicator")
 st.selectbox("Select a statistic:", columns, key="selected_column")
 
+st.write(f"Current selected_indicator: {st.session_state.selected_indicator}")
+st.write(f"Current selected_column: {st.session_state.selected_column}")
+
 df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
 chart = (
     alt.Chart(df_filtered)
@@ -137,6 +140,7 @@ chart = (
 )
 
 st.altair_chart(chart)
+
 # if selected_column == "mean" and all(df_filtered["std"] > 1):
 #     st.write(df_filtered)
 #     df_filtered["lower_bound"] = df_filtered["mean"] - 1.96 * df_filtered["std"]
