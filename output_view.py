@@ -120,12 +120,8 @@ if "selected_column" not in st.session_state:
     st.session_state.selected_column = columns[0]
 
 # Create a dropdown menu for the user to select the indicator and column
-st.selectbox(
-    "Select a metric:", indicators, key="selected_indicator"
-)
-st.selectbox(
-    "Select a statistic:", columns, key="selected_column"
-)
+st.selectbox("Select a metric:", indicators, key="selected_indicator")
+st.selectbox("Select a statistic:", columns, key="selected_column")
 
 df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
 chart = (
@@ -135,6 +131,10 @@ chart = (
         x="inputID:N",
         y=alt.Y(st.session_state.selected_column, stack="zero"),
         color="instanceID:N",
+        tooltip=[st.session_state.selected_column],
+    )
+    .properties(width=800, height=400)
+)
 
 st.altair_chart(chart)
 # if selected_column == "mean" and all(df_filtered["std"] > 1):
