@@ -120,10 +120,10 @@ selected_column = st.selectbox("Select a statistic:", columns, key="selected_col
 
 # Initialize session_state if it doesn't exist
 if "selected_indicator" not in st.session_state:
-    st.session_state.selected_indicator = indicators[0]
+    selected_indicator = indicators[0]
 
 if "selected_column" not in st.session_state:
-    st.session_state.selected_column = columns[0]
+    selected_column = columns[0]
 
 df_filtered = df[df["indicator"] == st.session_state.selected_indicator]
 chart = (
